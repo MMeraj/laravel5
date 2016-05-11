@@ -11,6 +11,7 @@ use Illuminate\Http\Response;
 use Illuminate\Pagination\Paginator;
 use Session;
 use DB;
+use Mail;
 
 class HomeController extends Controller {
 
@@ -91,19 +92,19 @@ class HomeController extends Controller {
         $file = Storage::disk('local')->get($entry->filename);
         return response($file, 200)->header('Content-Type', $entry->mime);
     }
-    
+
     public function download($filename) {
-        
+
         $path = storage_path() . '/app/' . $filename;
-        
+
         $entry = Fileentry::where('filename', '=', $filename)->firstOrFail();
 
-   $headers = array(
-                'Content-Type:'.$entry->mime,
-            );
+        $headers = array(
+            'Content-Type:' . $entry->mime,
+        );
 
-    return response()->download($path,$headers);
-        
+        return response()->download($path, $headers);
+
 //        $entry = Fileentry::where('filename', '=', $filename)->firstOrFail();
 //        $file = Storage::disk('local')->get($entry->filename);
 //        
@@ -112,6 +113,19 @@ class HomeController extends Controller {
 //            );
 //        return response()->download($file,$headers);
     }
-    
+
+    public function email() {
+
+        $name = \Input::get('name');
+        $email = \Input::get('email');
+        $message = \Input::get('message');
+        Mail::send('home.email',['name'=>'Test'],function ($message) {
+            $message->from('us@example.com', 'Laravel');
+
+            $message->to('exceltes@gmail.com');
+        });
+        Session::flash('message', 'Email Send Successfully');
+        return redirect('/email');
+    }
 
 }

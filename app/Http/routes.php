@@ -14,7 +14,7 @@
 
 Route::get('/', ['middleware' => 'auth', 'uses' => 'HomeController@view']);
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', 'HomeContrHooller@index');
 Route::post('save_detail', 
   ['middleware' => 'auth', 'as' => 'home2', 'uses' => 'HomeController@save_detail']);
 
@@ -39,6 +39,10 @@ Route::post('auth/login', 'LoginController@Login');
 Route::get('auth/register', function () {
     return view("auth/register");
 });
+Route::get('/email', function () {
+    return view("home/email");
+});
+Route::post('/email', 'HomeController@email');
 Route::post('auth/register', 'LoginController@postRegister');
 Route::auth();
 
