@@ -42,3 +42,9 @@ Route::get('auth/register', function () {
 Route::post('auth/register', 'LoginController@postRegister');
 Route::auth();
 
+Route::get('get/{filename}', [
+'as' => 'getentry', 'uses' => 'HomeController@get']);
+
+Route::get('down/{filename}', [
+'as' => 'downimage', 'uses' => 'HomeController@download']);
+

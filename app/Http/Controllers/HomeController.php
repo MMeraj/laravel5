@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Fileentry;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Request;
 use App\Http\Requests;
-
+use Illuminate\Http\Response;
 use Illuminate\Pagination\Paginator;
 use Session;
 use DB;
@@ -54,11 +55,12 @@ class HomeController extends Controller {
 
     public function view() {
         $results = DB::table('test')->paginate(3);
+        $entries = Fileentry::all();
 //       $name[]=\Input::get('name');
 //       $name[]=\Input::get('email');
 //       $name[]=\Input::get('message');
         //echo sizeof($name);
-        return \View::make('home.view')->with('results', $results);
+        return \View::make('home.view', compact('results', 'entries'));
     }
 
     public function delete($id) {
@@ -83,5 +85,33 @@ class HomeController extends Controller {
                 ->update(['name' => $name, 'email' => $email, 'message' => $message]);
         return redirect('/');
     }
+
+    public function get($filename) {
+        $entry = Fileentry::where('filename', '=', $filename)->firstOrFail();
+        $file = Storage::disk('local')->get($entry->filename);
+        return response($file, 200)->header('Content-Type', $entry->mime);
+    }
+    
+    public function download($filename) {
+        
+        $path = storage_path() . '/app/' . $filename;
+        
+        $entry = Fileentry::where('filename', '=', $filename)->firstOrFail();
+
+   $headers = array(
+                'Content-Type:'.$entry->mime,
+            );
+
+    return response()->download($path,$headers);
+        
+//        $entry = Fileentry::where('filename', '=', $filename)->firstOrFail();
+//        $file = Storage::disk('local')->get($entry->filename);
+//        
+//        $headers = array(
+//                'Content-Type:'.$entry->mime,
+//            );
+//        return response()->download($file,$headers);
+    }
+    
 
 }

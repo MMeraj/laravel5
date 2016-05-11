@@ -1,5 +1,8 @@
+
 @extends('layouts.app')
 @section('content')
+
+
 <div class="container">
 <table class="table">
     <tr style="background-color:#eeeeee ">
@@ -20,6 +23,22 @@
     {!! $results->links() !!}
     
 <a href="{{URL::to('/home')}}"><button class="btn btn-warning btn-lg">Add new Data</button></a>
+</div>
+ <h1> Pictures list</h1>
+<div class="row">
+ 
+    <ul>
+@foreach($entries as $entry)
+<div class="col-md-2">
+                <div class="thumbnail">
+                    <a href="{{route('downimage', $entry->filename)}}"><img src="{{route('getentry', $entry->filename)}}" alt="ALT NAME" class="img-responsive" /></a>
+                    <div class="caption">
+        <li>{{$entry->original_filename}}</li>
+        </div>
+                </div>
+            </div>
+@endforeach
+    </ul>
 </div>
 @endsection
 
