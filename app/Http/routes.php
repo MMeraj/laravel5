@@ -14,7 +14,7 @@
 
 Route::get('/', ['middleware' => 'auth', 'uses' => 'HomeController@view']);
 
-Route::get('/home', 'HomeContrHooller@index');
+Route::get('/home', 'HomeController@index');
 Route::post('save_detail', 
   ['middleware' => 'auth', 'as' => 'home2', 'uses' => 'HomeController@save_detail']);
 

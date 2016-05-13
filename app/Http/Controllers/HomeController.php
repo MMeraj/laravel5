@@ -57,10 +57,7 @@ class HomeController extends Controller {
     public function view() {
         $results = DB::table('test')->paginate(3);
         $entries = Fileentry::all();
-//       $name[]=\Input::get('name');
-//       $name[]=\Input::get('email');
-//       $name[]=\Input::get('message');
-        //echo sizeof($name);
+
         return \View::make('home.view', compact('results', 'entries'));
     }
 
@@ -119,11 +116,18 @@ class HomeController extends Controller {
         $name = \Input::get('name');
         $email = \Input::get('email');
         $message = \Input::get('message');
-        Mail::send('home.email',['name'=>'Test'],function ($message) {
-            $message->from('us@example.com', 'Laravel');
+        
+        Mail::raw('Text to e-mail', function ($message) {
+            $message->from('exceltes@gmail.com', 'Laravel');
 
             $message->to('exceltes@gmail.com');
         });
+        
+//        Mail::send('home.email',['name'=>'Test'],function ($message) {
+//            $message->from('us@example.com', 'Laravel');
+//
+//            $message->to('exceltes@gmail.com');
+//        });
         Session::flash('message', 'Email Send Successfully');
         return redirect('/email');
     }

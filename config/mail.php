@@ -17,6 +17,7 @@ return [
     */
 
     'driver' => env('MAIL_DRIVER', 'smtp'),
+   
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +43,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 587),
+    'port' => env('MAIL_PORT', 465),
 
     /*
     |--------------------------------------------------------------------------
@@ -55,7 +56,7 @@ return [
     |
     */
 
-    'from' => ['address' => "null@mail.com", 'name' => "Nobody"],
+    'from' => ['address' => 'exceltes@gmail.com', 'name' => 'Nobody'],
 
     /*
     |--------------------------------------------------------------------------
@@ -68,7 +69,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
 
     /*
     |--------------------------------------------------------------------------
@@ -81,7 +82,7 @@ return [
     |
     */
 
-    'username' => env('exceltes@gmail.com'),
+    'username' => env('exceltes'),
 
     /*
     |--------------------------------------------------------------------------
@@ -108,5 +109,7 @@ return [
     */
 
     'sendmail' => '/usr/sbin/sendmail -bs',
+    
+     'pretend' => false,
 
 ];
