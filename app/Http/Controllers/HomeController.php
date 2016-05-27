@@ -41,16 +41,16 @@ class HomeController extends Controller {
         DB::table('test')->insert(
                 ['name' => $name, 'email' => $email, 'message' => $message]
         );
-        $file = Request::file('filefield');
-        $extension = $file->getClientOriginalExtension();
-        Storage::disk('local')->put($file->getFilename() . '.' . $extension, File::get($file));
-        $entry = new Fileentry();
-        $entry->mime = $file->getClientMimeType();
-        $entry->original_filename = $file->getClientOriginalName();
-        $entry->filename = $file->getFilename() . '.' . $extension;
-
-        $entry->save();
-        Session::flash('message', 'Detail Saved Successfully');
+//        $file = Request::file('filefield');
+//        $extension = $file->getClientOriginalExtension();
+//        Storage::disk('local')->put($file->getFilename() . '.' . $extension, File::get($file));
+//        $entry = new Fileentry();
+//        $entry->mime = $file->getClientMimeType();
+//        $entry->original_filename = $file->getClientOriginalName();
+//        $entry->filename = $file->getFilename() . '.' . $extension;
+//
+//        $entry->save();
+//        Session::flash('message', 'Detail Saved Successfully');
         return redirect('/');
     }
 
@@ -109,6 +109,7 @@ class HomeController extends Controller {
 //                'Content-Type:'.$entry->mime,
 //            );
 //        return response()->download($file,$headers);
+       
     }
 
     public function email() {

@@ -52,3 +52,5 @@ Route::get('get/{filename}', [
 Route::get('down/{filename}', [
 'as' => 'downimage', 'uses' => 'HomeController@download']);
 
+Route::get('table','TableController@index');
+

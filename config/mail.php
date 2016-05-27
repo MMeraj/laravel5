@@ -82,7 +82,7 @@ return [
     |
     */
 
-    'username' => env('exceltes'),
+    'username' => env('exceltes@gmail.com'),
 
     /*
     |--------------------------------------------------------------------------

@@ -6,13 +6,21 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'BearAppSeeder' => $baseDir . '/database/seeds/BearAppSeeder.php',
+    'CreateBearsPicnicsTable' => $baseDir . '/database/migrations/2016_05_27_060351_create_bears_picnics_table.php',
     'CreateFileentriesTable' => $baseDir . '/database/migrations/2016_05_11_052758_create_fileentries_table.php',
+    'CreateJobsTable' => $baseDir . '/database/migrations/2016_05_16_044839_create_jobs_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
+    'CreateTableBears' => $baseDir . '/database/migrations/2016_05_27_055903_create_table_bears.php',
+    'CreateTableFish' => $baseDir . '/database/migrations/2016_05_27_055925_create_table_fish.php',
+    'CreateTablePicnic' => $baseDir . '/database/migrations/2016_05_27_060008_create_table_picnic.php',
     'CreateTaskTable' => $baseDir . '/database/migrations/2016_05_12_094345_create_task_table.php',
+    'CreateTestTable' => $baseDir . '/database/migrations/2016_05_18_054524_create_test_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
     'File_Iterator_Factory' => $vendorDir . '/phpunit/php-file-iterator/src/Factory.php',
+    'FlightTableSeeder' => $baseDir . '/database/seeds/FlightTableSeeder.php',
     'Hamcrest\\Arrays\\IsArray' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArray.php',
     'Hamcrest\\Arrays\\IsArrayContaining' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArrayContaining.php',
     'Hamcrest\\Arrays\\IsArrayContainingInAnyOrder' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Arrays/IsArrayContainingInAnyOrder.php',

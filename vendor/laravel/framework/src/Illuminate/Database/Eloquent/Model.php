@@ -823,7 +823,7 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
         // If the type value is null it is probably safe to assume we're eager loading
         // the relationship. When that is the case we will pass in a dummy query as
         // there are multiple types in the morph and we can't use single queries.
-        if (is_null($class = $this->$type)) {
+        if (empty($class = $this->$type)) {
             return new MorphTo(
                 $this->newQuery(), $this, $id, null, $type, $name
             );
@@ -1787,6 +1787,16 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
     }
 
     /**
+     * Get the fully qualified "updated at" column.
+     *
+     * @return string
+     */
+    public function getQualifiedUpdatedAtColumn()
+    {
+        return $this->getTable().'.'.$this->getUpdatedAtColumn();
+    }
+
+    /**
      * Get a fresh timestamp for the model.
      *
      * @return \Carbon\Carbon
@@ -2125,6 +2135,10 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
     public function makeVisible($attributes)
     {
         $this->hidden = array_diff($this->hidden, (array) $attributes);
+
+        if (! empty($this->visible)) {
+            $this->addVisible($attributes);
+        }
 
         return $this;
     }
@@ -3034,11 +3048,13 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
      */
     public function replicate(array $except = null)
     {
-        $except = $except ?: [
+        $defaults = [
             $this->getKeyName(),
             $this->getCreatedAtColumn(),
             $this->getUpdatedAtColumn(),
         ];
+
+        $except = $except ? array_unique(array_merge($except, $defaults)) : $defaults;
 
         $attributes = Arr::except($this->attributes, $except);
 
@@ -3453,15 +3469,22 @@ abstract class Model implements ArrayAccess, Arrayable, Jsonable, JsonSerializab
     }
 
     /**
-     * Determine if an attribute exists on the model.
+     * Determine if an attribute or relation exists on the model.
      *
      * @param  string  $key
      * @return bool
      */
     public function __isset($key)
     {
-        return (isset($this->attributes[$key]) || isset($this->relations[$key])) ||
-                ($this->hasGetMutator($key) && ! is_null($this->getAttributeValue($key)));
+        if (isset($this->attributes[$key]) || isset($this->relations[$key])) {
+            return true;
+        }
+
+        if (method_exists($this, $key) && $this->$key && isset($this->relations[$key])) {
+            return true;
+        }
+
+        return $this->hasGetMutator($key) && ! is_null($this->getAttributeValue($key));
     }
 
     /**

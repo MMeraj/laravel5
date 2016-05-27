@@ -8,6 +8,7 @@
 {{Session::get('message')}}
 {!! Form::open(array('url'=>'save_detail','class' => 'form','enctype'=>'multipart/form-data')) !!}
 
+
 <div class="form-group">
     {!! Form::label('Your Name') !!}
     {!! Form::text('name', null, 
@@ -15,7 +16,7 @@
               'class'=>'form-control', 
               'placeholder'=>'Your name')) !!}
 </div>
-
+<!--{!! Form::date('name', \Carbon\Carbon::now()) !!}-->
 <div class="form-group">
     {!! Form::label('Your E-mail Address') !!}
     {!! Form::text('email', null, 
